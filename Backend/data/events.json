@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Jazz Night at the Park",
+    "description": "Enjoy a soulful evening with live jazz performances in an open-air venue.",
+    "price": 30,
+    "venue": "Central Park Amphitheater",
+    "category": "Music",
+    "image": "https://example.com/images/jazz-night.jpg"
+  },
+  {
+    "name": "Startup Pitch Competition",
+    "description": "Watch top startups pitch their ideas to a panel of investors.",
+    "price": 0,
+    "venue": "Tech Hub Auditorium",
+    "category": "Business",
+    "image": "https://example.com/images/startup-pitch.jpg"
+  },
+  {
+    "name": "AI and Future Tech Expo",
+    "description": "Explore the future of artificial intelligence and cutting-edge tech.",
+    "price": 50,
+    "venue": "Expo Center Hall B",
+    "category": "Tech",
+    "image": "https://example.com/images/ai-expo.jpg"
+  },
+  {
+    "name": "5K Charity Run",
+    "description": "Join the community for a morning run to support local schools.",
+    "price": 15,
+    "venue": "City Sports Complex",
+    "category": "Sport",
+    "image": "https://example.com/images/charity-run.jpg"
+  },
+  {
+    "name": "Modern Art Gallery Tour",
+    "description": "A guided tour through the latest modern art installations.",
+    "price": 20,
+    "venue": "Downtown Art Gallery",
+    "category": "Art",
+    "image": "https://example.com/images/art-gallery.jpg"
+  },
+  {
+    "name": "Freelancer Networking Mixer",
+    "description": "Meet other freelancers and expand your professional network.",
+    "price": 10,
+    "venue": "Rooftop Lounge, Block 21",
+    "category": "Business",
+    "image": "https://example.com/images/networking-event.jpg"
+  },
+  {
+    "name": "Local Bands Live",
+    "description": "Support your local music scene with performances from 5 bands.",
+    "price": 25,
+    "venue": "Brickhouse Bar & Stage",
+    "category": "Music",
+    "image": "https://example.com/images/local-bands.jpg"
+  },
+  {
+    "name": "Drone Racing Championship",
+    "description": "Watch skilled drone pilots race at high speed through obstacles.",
+    "price": 40,
+    "venue": "Tech Racing Arena",
+    "category": "Sport",
+    "image": "https://example.com/images/drone-racing.jpg"
+  },
+  {
+    "name": "Intro to Python Workshop",
+    "description": "A beginner-friendly coding workshop covering Python basics.",
+    "price": 5,
+    "venue": "Community Learning Center",
+    "category": "Tech",
+    "image": "https://example.com/images/python-workshop.jpg"
+  },
+  {
+    "name": "Street Food & Culture Fest",
+    "description": "A celebration of global street food and cultural performances.",
+    "price": 10,
+    "venue": "Riverfront Plaza",
+    "category": "Other",
+    "image": "https://example.com/images/street-fest.jpg"
+  }
+]
