@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="ltr">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="en-text">Events App</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-link en-text">Home</a>
+            </div>
+            
+            <div class="nav-controls">
+                <div class="toggle-container">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="en-text">Dark Mode</span>
+                </div>                
+                <div class="auth-buttons">
+                    <a href="sign-up.html" class="btn btn-primary btn-sm en-text">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="events-list">
+            <div class="events-container">
+                <div class="event-card">
+                    <div class="event-badge en-text">Featured</div>
+                    
+                    <div class="event-image">
+                        <img src="img/awrds.png" alt="Workshop">
+                    </div>
+                    
+                    <div class="event-details">
+                        <h3 class="event-title en-text">Self-Development Workshop</h3>
+                        
+                        <div class="event-meta">
+                            <span class="event-date en-text">
+                                <i class="fas fa-calendar-alt"></i> June 30, 2025
+                            </span>
+                            
+                            <span class="event-venue en-text">
+                                <i class="fas fa-map-marker-alt"></i> Youth Cultural Center
+                            </span>
+                        </div>
+                        
+                        <p class="event-description en-text">
+                            Learn new self-development skills and boost productivity through interactive sessions with personal development experts.
+                        </p>
+                        
+                        <div class="event-footer">
+                            <span class="event-price en-text">Price: 120 EGP</span>
+                            
+                            <button class="book-btn en-text">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js.js"></script>
+</body>
+</html>
