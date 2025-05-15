@@ -1,13 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "../css/style.css";
-// import "../handlers/js";
-// import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
-import DarkModeToggle from "../components/DarkModeToggle";
-
+// Components
+import NavBarLoginSignUp from "../components/NavBarLoginSignUp";
 // user?
 // {
 //   "username":"samy",
@@ -19,12 +16,6 @@ const Login = () => {
   // use States for login
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  // const navigate = useNavigate();
-
-  // http://localhost:3000/api/v1/auth/login
-  // http://localhost:3000/api/v1/auth/register
-  // const loginResponse = login(loginEmail, loginPassword);
-  // console.log(loginResponse);
   const handleLoginForm = async (e) => {
     e.preventDefault();
 
@@ -39,34 +30,18 @@ const Login = () => {
       toast.success(response.data.message);
       // navigate("/");
     } catch (error) {
-      console.log(error);
-      toast.error("Login failed. Please check your credentials.");
+      console.log(error.message);
+      toast.error(
+        error.response?.data?.message ||
+          "Login failed. Please check your credentials."
+      );
     }
+    console.log("req.header: ");
   };
 
   return (
     <>
-      <nav className="navbar">
-        <div className="nav-container">
-          <div className="nav-brand">
-            <span className="en-text">Events App</span>
-          </div>
-
-          <div className="nav-links">
-            <a href="index.html" className="nav-link en-text">
-              Home
-            </a>
-          </div>
-
-          <div className="nav-controls">
-            <div className="toggle-container">
-              <DarkModeToggle></DarkModeToggle>
-              <span className="en-text">Dark Mode</span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+      <NavBarLoginSignUp></NavBarLoginSignUp>
       <div className="container">
         <section className="auth-section">
           <div className="auth-container">
@@ -79,7 +54,6 @@ const Login = () => {
 
             <form
               className="auth-form"
-              action="/login"
               method="POST"
               onSubmit={handleLoginForm}
             >
@@ -113,9 +87,6 @@ const Login = () => {
                   }}
                   required
                 />
-                {/* <a href="sign-up.html" class="forgot-password en-text">
-                  Forgot password?
-                </a> */}
               </div>
 
               <div className="form-actions">

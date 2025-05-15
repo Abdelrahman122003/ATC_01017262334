@@ -1,44 +1,14 @@
 import React from "react";
-// import { useState } from "react";
-import "../css/style.css";
 
-// import useLogin from "../hooks/useLogin";
-import DarkModeToggle from "../components/DarkModeToggle";
+// components
+import NavBarHP from "../components/NavBarHP";
+
 const HomePage = () => {
-  // // use States for sign up
-  // const [signUpEmail, setSignUpEmail] = useState("");
-  // const [signUpPassword, setSignUpPassword] = useState("");
-  // const [username, setUsername] = useState("");
-
-  // const handleSignUpForm = (e) => {
-  //   alert("Sign Up Successful!");
-  //   e.preventDefault();
-  // };
-
+  const imageForEvent =
+    "https://media.istockphoto.com/id/1482843873/photo/close-up-on-hands-of-a-crowd-of-people-clapping-in-dark-conference-hall-during-a-motivational.jpg?s=612x612&w=0&k=20&c=l82b7EN4ml1NOIHsTMrQtEO6FpJbOE5ZbimEG1aeGM0=";
   return (
     <>
-      <nav className="navbar">
-        <div className="nav-container">
-          <div className="nav-brand">
-            <span className="en-text">Events App</span>
-          </div>
-          <div className="nav-links">
-            <a href="sign-up.html" className="btn btn-primary btn-sm en-text">
-              sign-up
-            </a>
-            <a href="login.html" className="btn btn-primary btn-sm en-text">
-              login
-            </a>
-          </div>
-          <div className="nav-controls">
-            <div className="toggle-container">
-              <DarkModeToggle />
-              <span className="en-text">Dark Mode</span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+      <NavBarHP></NavBarHP>
       <section className="events-section">
         <div className="section-header">
           <h2 className="en-text">Upcoming Events</h2>
@@ -47,64 +17,9 @@ const HomePage = () => {
           </p>
         </div>
         <div className="events-container">
-          {/* Event 1 */}
-          <div className="event-card">
-            <div className="event-badge en-text">New</div>
-            <div className="event-image">
-              <img src="img/logo.jpeg" alt="Music Event" />
-            </div>
-            <div className="event-details">
-              <h3 className="event-title en-text">Music Event</h3>
-              <div className="event-meta">
-                <span className="event-date en-text">
-                  <i className="fas fa-calendar-alt"></i> June 15, 2025
-                </span>
-                <span className="event-venue en-text">
-                  <i className="fas fa-map-marker-alt"></i> National Theater
-                </span>
-              </div>
-              <p className="event-description en-text">
-                Live music concert with top local artists. An unforgettable
-                night of music and entertainment.
-              </p>
-              <div className="event-footer">
-                <span className="event-price en-text">Price: 150 EGP</span>
-                <button className="book-btn en-text">Book Now</button>
-              </div>
-            </div>
-          </div>
-
-          {/* Event 2 */}
-          <div className="event-card">
-            <div className="event-badge en-text">New</div>
-            <div className="event-image">
-              <img src="img/1.jpeg" alt="Music Event" />
-            </div>
-            <div className="event-details">
-              <h3 className="event-title en-text">Music Event</h3>
-              <div className="event-meta">
-                <span className="event-date en-text">
-                  <i className="fas fa-calendar-alt"></i> June 15, 2025
-                </span>
-                <span className="event-venue en-text">
-                  <i className="fas fa-map-marker-alt"></i> National Theater
-                </span>
-              </div>
-              <p className="event-description en-text">
-                Live music concert with top local artists. An unforgettable
-                night of music and entertainment.
-              </p>
-              <div className="event-footer">
-                <span className="event-price en-text">Price: 150 EGP</span>
-                <button className="book-btn en-text">Book Now</button>
-              </div>
-            </div>
-          </div>
-
-          {/* Event 3 */}
           <div className="event-card">
             <div className="event-image">
-              <img src="img/cnn.png" alt="Tech Conference" />
+              <img src={imageForEvent} alt="Tech Conference" />
             </div>
             <div className="event-details">
               <h3 className="event-title en-text">Tech Conference</h3>
@@ -126,12 +41,90 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-
+          {/* Event 3 */}
+          <div className="event-card">
+            <div className="event-image">
+              <img src={imageForEvent} alt="Tech Conference" />
+            </div>
+            <div className="event-details">
+              <h3 className="event-title en-text">Tech Conference</h3>
+              <div className="event-meta">
+                <span className="event-date en-text">
+                  <i className="fas fa-calendar-alt"></i> June 20, 2025
+                </span>
+                <span className="event-venue en-text">
+                  <i className="fas fa-map-marker-alt"></i> Convention Center
+                </span>
+              </div>
+              <p className="event-description en-text">
+                Latest developments in technology with industry experts.
+                Opportunity to learn and network.
+              </p>
+              <div className="event-footer">
+                <span className="event-price en-text">Price: 200 EGP</span>
+                <button className="book-btn en-text">Book Now</button>
+              </div>
+            </div>
+          </div>
           {/* Event 4 */}
           <div className="event-card">
             <div className="event-badge en-text">Popular</div>
             <div className="event-image">
-              <img src="img/awrds.png" alt="Art Exhibition" />
+              <img src={imageForEvent} alt="Art Exhibition" />
+            </div>
+            <div className="event-details">
+              <h3 className="event-title en-text">Art Exhibition</h3>
+              <div className="event-meta">
+                <span className="event-date en-text">
+                  <i className="fas fa-calendar-alt"></i> June 25, 2025
+                </span>
+                <span className="event-venue en-text">
+                  <i className="fas fa-map-marker-alt"></i> National Museum
+                </span>
+              </div>
+              <p className="event-description en-text">
+                Showcase of works by local and international artists. A rich and
+                diverse artistic experience.
+              </p>
+              <div className="event-footer">
+                <span className="event-price en-text">Price: 100 EGP</span>
+                <button className="book-btn booked en-text">Booked</button>
+              </div>
+            </div>
+          </div>
+
+          {/* Event 5 */}
+
+          <div className="event-card">
+            <div className="event-badge en-text">Popular</div>
+            <div className="event-image">
+              <img src={imageForEvent} alt="Art Exhibition" />
+            </div>
+            <div className="event-details">
+              <h3 className="event-title en-text">Art Exhibition</h3>
+              <div className="event-meta">
+                <span className="event-date en-text">
+                  <i className="fas fa-calendar-alt"></i> June 25, 2025
+                </span>
+                <span className="event-venue en-text">
+                  <i className="fas fa-map-marker-alt"></i> National Museum
+                </span>
+              </div>
+              <p className="event-description en-text">
+                Showcase of works by local and international artists. A rich and
+                diverse artistic experience.
+              </p>
+              <div className="event-footer">
+                <span className="event-price en-text">Price: 100 EGP</span>
+                <button className="book-btn booked en-text">Booked</button>
+              </div>
+            </div>
+          </div>
+          {/* Event 6 */}
+          <div className="event-card">
+            <div className="event-badge en-text">Popular</div>
+            <div className="event-image">
+              <img src={imageForEvent} alt="Art Exhibition" />
             </div>
             <div className="event-details">
               <h3 className="event-title en-text">Art Exhibition</h3>
@@ -181,3 +174,49 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+// {/* Event 1 */}
+// <Event
+// event={{
+//   name: "Musician Event",
+//   image: imageForEvent,
+//   category: "Music",
+//   date: "June 15, 2025",
+//   venue: "National Theater",
+//   description:
+//     "Live music concert with top local artists. An unforgettable night of music and entertainment",
+//   price: 100,
+//   status: "available",
+//   _id: "1",
+// }}
+// />
+// {/* Event 2 */}
+// <Event
+// event={{
+//   name: "Musician Event",
+//   image: imageForEvent,
+//   category: "Music",
+//   date: "June 15, 2025",
+//   venue: "National Theater",
+//   description:
+//     "Live music concert with top local artists. An unforgettable night of music and entertainment",
+//   price: 100,
+//   status: "available",
+//   _id: "2",
+// }}
+// ></Event>
+// {/* Event 3 */}
+// <Event
+// event={{
+//   name: "Music Event",
+//   image: imageForEvent,
+//   category: "Music",
+//   date: "June 15, 2025",
+//   venue: "National Theater",
+//   description:
+//     "Live music concert with top local artists. An unforgettable night of music and entertainment.",
+//   price: 900,
+//   status: "available",
+//   _id: "3",
+// }}
+// ></Event>

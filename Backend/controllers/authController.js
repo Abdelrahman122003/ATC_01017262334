@@ -18,9 +18,15 @@ const createSendJWTToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    sameSite: "Strict",
   };
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
   res.cookie("jwt", token, cookieOptions);
+
+  // => Set Token in headers
+  // res.setHeader("Authorization", `Bearer ${token}`);
+
+  // console.log("headers: ", res.headers);
   // remove password from output
   user.password = undefined;
   res.status(200).json({
@@ -35,6 +41,7 @@ const createSendJWTToken = (user, statusCode, res) => {
 
 exports.register = async (req, res, next) => {
   const { username, password, email, confirmPassword } = req.body;
+  console.log("req.body : ", req.body);
   if (!username || !password || !email || !confirmPassword) {
     res.status(400).json({
       status: "fail",
@@ -67,10 +74,13 @@ exports.register = async (req, res, next) => {
 };
 
 exports.login = catchAsync(async (req, res, next) => {
-  console.log("req.body from client: ", req.body);
+  // console.log("req.body from client: ", req.headers.authorization);
   const { email, password } = req.body;
 
   if (!password || !email) {
+    return res.status(400).json({
+      message: "Please provide username and password",
+    });
     return next(new AppError("Please provide username and password", 400));
   }
   //  check if username is exist and password is correct.
@@ -91,10 +101,11 @@ exports.login = catchAsync(async (req, res, next) => {
     //   message: "Incorrect Password, Please Try Again",
     // });
   }
-
   createSendJWTToken(user, 200, res);
 });
 exports.protect = catchAsync(async (req, res, next) => {
+  console.log("token from cookie: ", req.cookies.jwt);
+  // console.log("")
   // 1) Getting token and check of it's there
   let token;
   if (
@@ -102,7 +113,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
-  }
+  } else if (req.cookies.jwt) token = req.cookies.jwt;
+
   if (!token) {
     return next(
       new AppError("Your are not logged in! Please login to get access", 401)

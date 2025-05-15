@@ -1,20 +1,44 @@
-import DarkModeToggle from "../components/DarkModeToggle";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Components
+import NavBarLoginSignUp from "../components/NavBarLoginSignUp";
+
 const SignUp = () => {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+
+  const handleSignUpForm = async (e) => {
+    e.preventDefault();
+    console.log("username: ", username);
+    console.log("email: ", email);
+    let response;
+    try {
+      response = await axios.post(
+        `http://localhost:3000/api/v1/auth/register`,
+        {
+          username: username,
+          email: email,
+          password: password,
+          confirmPassword: confirmPass,
+        },
+        { headers: { "Content-Type": "application/json" } }
+      );
+      console.log(response.data);
+      toast.success(response.data.message);
+      // navigate("/");
+    } catch (error) {
+      console.log(error);
+      toast.error("Registration failed. Please check your inputs.");
+    }
+  };
   return (
     <>
-      <nav className="navbar">
-        <div className="nav-container">
-          <div className="nav-brand">
-            <span className="en-text">Events App</span>
-          </div>
-          <div className="nav-controls">
-            <div className="toggle-container">
-              <DarkModeToggle></DarkModeToggle>
-              <span className="en-text">Dark Mode</span>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <NavBarLoginSignUp></NavBarLoginSignUp>
       <div className="container">
         <section className="auth-section">
           <div className="auth-container">
@@ -25,16 +49,23 @@ const SignUp = () => {
               </p>
             </div>
 
-            <form className="auth-form" action="/signup" method="POST">
+            <form
+              className="auth-form"
+              method="POST"
+              onSubmit={handleSignUpForm}
+            >
               <div className="form-group">
                 <label htmlFor="name" className="en-text">
-                  Full Name
+                  username
                 </label>
                 <input
                   type="text"
                   id="name"
-                  name="name"
+                  name="username"
                   className="form-control"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
                   required
                 />
               </div>
@@ -49,6 +80,9 @@ const SignUp = () => {
                   name="email"
                   className="form-control"
                   required
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
               </div>
 
@@ -62,6 +96,9 @@ const SignUp = () => {
                   name="password"
                   className="form-control"
                   required
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </div>
 
@@ -75,6 +112,9 @@ const SignUp = () => {
                   name="confirmPassword"
                   className="form-control"
                   required
+                  onChange={(e) => {
+                    setConfirmPass(e.target.value);
+                  }}
                 />
               </div>
 

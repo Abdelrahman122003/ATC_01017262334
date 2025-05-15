@@ -10,7 +10,6 @@ router.post("/register", authController.register);
 router.post("/login", authController.login);
 
 // >>> For All users that is loggedIn
-
 // Protect all routes after this middleware
 router.use(authController.protect);
 

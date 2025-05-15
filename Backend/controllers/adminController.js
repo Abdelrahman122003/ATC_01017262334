@@ -2,10 +2,21 @@ const Event = require("../models/event");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 
+exports.getAllEvents = catchAsync(async (req, res, next) => {
+  //   Get all events
+  const events = await Event.find();
+
+  res.status(200).json({
+    status: "success",
+    results: events.length,
+    data: events,
+  });
+});
+
 exports.createEvent = catchAsync(async (req, res, next) => {
-  const { name, description, venue, price, category, image } = req.body;
-  if (!name || !description || !venue || !price || !category || !image)
-    return next(new AppError("Missing Required Field!", 401));
+  const { name, description, venue, price, category, image, date } = req.body;
+  if (!name || !description || !venue || !price || !category || !image || !date)
+    return next(new AppError("Missing Required Field!", 400));
 
   const event = await Event.create(req.body);
 
