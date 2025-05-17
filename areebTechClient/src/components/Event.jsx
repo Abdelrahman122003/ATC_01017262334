@@ -2,7 +2,11 @@ import { useState } from "react";
 import { formatDate } from "../handlers/formatDate";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+
+// Consts And values for headers, domain, .....
+import { serverDomain, getHeaderAuth } from "../consts/values";
 
 const Event = (props) => {
   const {
@@ -17,20 +21,22 @@ const Event = (props) => {
     status: initialStatus,
   } = props.event;
   const [status, setStatus] = useState(initialStatus);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   const bookEvent = async (_id) => {
     let response;
     try {
       response = await axios.post(
-        `http://localhost:3000/api/v1/user/bookEvent`,
+        `${serverDomain}/api/v1/user/bookEvent`,
         {
-          userId: "6819d556d94ff85153da8c88",
+          userId: user._id,
           eventId: _id,
         },
-        { headers: { "Content-Type": "application/json" } }
+        getHeaderAuth(user.role)
       );
       setStatus("booked");
       toast.success(response.data.message);
-      // navigate("/");
+      navigate("/congratulation");
     } catch (error) {
       console.log(error);
       toast.error("Booking failed. Please try again.");

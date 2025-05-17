@@ -9,15 +9,19 @@ import Edit from "../pages/Edit";
 
 // Handlers
 import { formatDate } from "../handlers/formatDate";
+
+// Consts And values for headers, domain, .....
+import { getHeaderAuth, serverDomain } from "../consts/values";
+
 const AdminEvent = (props) => {
+  // Get user from LocalStorage
+  const user = JSON.parse(localStorage.getItem("user"));
   const { event, onDelete } = props;
   const handleDeleteEvent = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/admin/deleteEvent/${event._id}`,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
+        `${serverDomain}/api/v1/admin/deleteEvent/${event._id}`,
+        getHeaderAuth(user.role)
       );
       toast.success(response.data.message);
       if (onDelete) onDelete(event._id);
@@ -42,7 +46,7 @@ const AdminEvent = (props) => {
             className="btn btn-primary btn-sm en-text"
           >
             {/* <Edit event={event}></Edit> */}
-            Edit - {event._id}
+            Edit
           </Link>
           <button
             onClick={handleDeleteEvent}

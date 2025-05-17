@@ -2,9 +2,8 @@ const { sign } = require("jsonwebtoken");
 const User = require("../models/user");
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
-const jsCookie = require("js-cookie");
-const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const { promisify } = require("util");
 const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
@@ -13,20 +12,7 @@ const signToken = (id) => {
 
 const createSendJWTToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-  const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true,
-    sameSite: "Strict",
-  };
-  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
-  res.cookie("jwt", token, cookieOptions);
 
-  // => Set Token in headers
-  // res.setHeader("Authorization", `Bearer ${token}`);
-
-  // console.log("headers: ", res.headers);
   // remove password from output
   user.password = undefined;
   res.status(200).json({
@@ -92,7 +78,7 @@ exports.login = catchAsync(async (req, res, next) => {
     //   message: ,
     // });
   }
-  console.log("user : ", user);
+  // console.log("user : ", user);
   const correct = await user.correctPassword(password, user.password);
   if (!correct) {
     return next(new AppError("Incorrect Password, Please Try Again", 401));
@@ -104,21 +90,18 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendJWTToken(user, 200, res);
 });
 exports.protect = catchAsync(async (req, res, next) => {
-  console.log("token from cookie: ", req.cookies.jwt);
-  // console.log("")
-  // 1) Getting token and check of it's there
-  let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
-  } else if (req.cookies.jwt) token = req.cookies.jwt;
+  // 1) Getting token from localStorage and check of it's there
+  let { token } = req.headers;
+  console.log("token from protect: ", token);
 
   if (!token) {
-    return next(
-      new AppError("Your are not logged in! Please login to get access", 401)
-    );
+    res.status(401).json({
+      status: "fail",
+      message: "Your are not logged in! Please login to get access",
+    });
+    // return next(
+    //   new AppError("Your are not logged in! Please login to get access", 401)
+    // );
   }
   // 2) Verification token
 
@@ -131,15 +114,19 @@ exports.protect = catchAsync(async (req, res, next) => {
   const currentUser = await User.findById(decoded.id);
 
   if (!currentUser) {
-    return next(
-      new AppError(
-        "The user belonging to this token does no logger exist.",
-        401
-      )
-    );
+    res.status(401).json({
+      status: "fail",
+      message: "The user belonging to this token does no logger exist.",
+    });
+    // return next(
+    //   new AppError(
+    //     "The user belonging to this token does no logger exist.",
+    //     401
+    //   )
+    // );
   }
   // GRANT ACCESS TO PROTECTED ROUTE
-  req.user = currentUser;
+  // req.user = currentUser;
   next();
 });
 
@@ -149,7 +136,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 // and then returns a middleware function: (req, res, next) => { ... }.
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+    if (!roles.includes(req.headers.role)) {
       return next(
         new AppError("You do have permission to perform this action"),
         403

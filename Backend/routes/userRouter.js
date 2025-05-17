@@ -7,7 +7,17 @@ const authController = require("../controllers/authController");
 // auth => protect to check use session is expired or no
 // router.use(authController.protect);
 //
-router.post("/bookEvent", userController.bookEvent);
-router.get("/getAllEvents/:userId", userController.getAllEvents);
+router.post(
+  "/bookEvent",
+  authController.protect,
+  authController.restrictTo("User"),
+  userController.bookEvent
+);
+router.get(
+  "/getAllEvents/:userId",
+  authController.protect,
+  authController.restrictTo("User"),
+  userController.getAllEvents
+);
 
 module.exports = router;

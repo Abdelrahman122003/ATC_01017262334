@@ -34,7 +34,7 @@ function App() {
           {/* User Pages */}
           <Route path="user/dashboard" element={<UserDashboard />} />
           {/* <Route path="user/booked-event" element={<CongratePage />} /> */}
-          <Route path="/cong" element={<Congratulations />}></Route>
+          <Route path="/congratulation" element={<Congratulations />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </Router>

@@ -2,9 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 // Components
 import NavBarLoginSignUp from "../components/NavBarLoginSignUp";
+
+// Consts And values for headers, domain, .....
+import { getHeader, serverDomain } from "../consts/values";
+
 // user?
 // {
 //   "username":"samy",
@@ -12,23 +17,38 @@ import NavBarLoginSignUp from "../components/NavBarLoginSignUp";
 //   "password": "samy",
 //   "confirmPassword":"samy"
 // }
+
+// Admin?
+// {
+//   "username": "zoombieAdmin",
+//   "email": "admin@gmail.com",
+//   "password": "admin"
+// }
+
 const Login = () => {
   // use States for login
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+
+  const navigate = useNavigate();
   const handleLoginForm = async (e) => {
     e.preventDefault();
 
     let response;
     try {
       response = await axios.post(
-        `http://localhost:3000/api/v1/auth/login`,
+        `${serverDomain}/api/v1/auth/login`,
         { email: loginEmail, password: loginPassword },
-        { headers: { "Content-Type": "application/json" } }
+        getHeader
       );
-      console.log(response.data);
+      // Set Token in localStorage and access it in backend to allow user to access any resource
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.data.user));
+      const user = response.data.data.user;
       toast.success(response.data.message);
-      // navigate("/");
+      // Navigate to user or admin depend on user role
+      if (user.role === "User") navigate("/user/dashboard");
+      else navigate("/admin/dashboard");
     } catch (error) {
       console.log(error.message);
       toast.error(
@@ -36,7 +56,6 @@ const Login = () => {
           "Login failed. Please check your credentials."
       );
     }
-    console.log("req.header: ");
   };
 
   return (

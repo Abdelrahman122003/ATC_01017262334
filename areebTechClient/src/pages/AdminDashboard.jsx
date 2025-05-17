@@ -4,19 +4,24 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
+// Consts And values for headers, domain, .....
+import { getHeaderAuth, serverDomain } from "../consts/values";
+
 // Components
 import NavBarUA from "../components/NavBarUA";
 import AdminEvent from "../components/AdminEvent";
 
 const AdminDashboard = () => {
   const [events, setEvents] = useState([]);
+
+  // Get user from localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
   const getEvents = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/admin/getAllEvents`,
-        { headers: { "Content-Type": "application/json" } }
+        `${serverDomain}/api/v1/admin/getAllEvents`,
+        getHeaderAuth(user.role)
       );
-      console.log("response: ", response.data.data);
       setEvents(response.data?.data || []);
       toast.success(response.data.message);
     } catch (error) {
@@ -48,7 +53,7 @@ const AdminDashboard = () => {
               <th className="en-text">Event Name</th>
               <th className="en-text">Date</th>
               <th className="en-text">Venue</th>
-              <th className="en-text">Action</th>
+              <th className="en-text">Actions</th>
             </tr>
           </thead>
           <tbody>

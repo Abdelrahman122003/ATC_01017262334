@@ -7,10 +7,16 @@ import axios from "axios";
 // Style messages for user
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 // Handlers
 import { formatToInputDate } from "../handlers/formatToInputDate";
 
+// Consts And values for headers, domain, .....
+import { getHeaderAuth, serverDomain } from "../consts/values";
+
 const Edit = () => {
+  // Get user from localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
   const location = useLocation();
   const navigate = useNavigate();
   const { event } = location.state || {};
@@ -29,7 +35,7 @@ const Edit = () => {
     let response;
     try {
       response = await axios.patch(
-        `http://localhost:3000/api/v1/admin/updateEvent/${event._id}`,
+        `${serverDomain}/api/v1/admin/updateEvent/${event._id}`,
         {
           name: formData.name,
           category: formData.category,
@@ -39,7 +45,7 @@ const Edit = () => {
           image: formData.image,
           description: formData.description,
         },
-        { headers: { "Content-Type": "application/json" } }
+        getHeaderAuth(user.role)
       );
       toast.success(response.data.message);
       navigate("/admin/dashboard");

@@ -2,35 +2,35 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
 // Components
 import NavBarLoginSignUp from "../components/NavBarLoginSignUp";
+
+// Consts And values for headers, domain, .....
+import { serverDomain, getHeader } from "../consts/values";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
-
+  const navigate = useNavigate();
   const handleSignUpForm = async (e) => {
     e.preventDefault();
-    console.log("username: ", username);
-    console.log("email: ", email);
     let response;
     try {
       response = await axios.post(
-        `http://localhost:3000/api/v1/auth/register`,
+        `${serverDomain}/api/v1/auth/register`,
         {
           username: username,
           email: email,
           password: password,
           confirmPassword: confirmPass,
         },
-        { headers: { "Content-Type": "application/json" } }
+        getHeader
       );
-      console.log(response.data);
       toast.success(response.data.message);
-      // navigate("/");
+      navigate("/login");
     } catch (error) {
       console.log(error);
       toast.error("Registration failed. Please check your inputs.");
