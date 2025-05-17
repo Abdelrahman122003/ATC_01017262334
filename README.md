@@ -19,9 +19,9 @@ npm run dev
 - Run the backend: `npm run start`
 
 ```sh
-npm i
 cd Backend
-npm urn start
+npm i
+npm run start
 ```
 
 ## Admin Features
