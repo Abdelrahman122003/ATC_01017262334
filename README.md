@@ -1,4 +1,4 @@
-# Arreb Tech Task
+# Areeb Tech Task
 
 ## Client
 
