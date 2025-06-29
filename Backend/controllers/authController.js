@@ -59,7 +59,7 @@ exports.register = async (req, res, next) => {
   });
 };
 
-exports.login = catchAsync(async (req, res, next) => {
+exports.login = async (req, res, next) => {
   // console.log("req.body from client: ", req.headers.authorization);
   const { email, password } = req.body;
 
@@ -67,28 +67,28 @@ exports.login = catchAsync(async (req, res, next) => {
     return res.status(400).json({
       message: "Please provide username and password",
     });
-    return next(new AppError("Please provide username and password", 400));
+    // return next(new AppError("Please provide username and password", 400));
   }
   //  check if username is exist and password is correct.
   const user = await User.findOne({ email }).select("+password");
   if (user === null) {
-    return next(new AppError("This user is not exist!", 401));
-    // res.status(401).json({
-    //   status: "fail",
-    //   message: ,
-    // });
+    // return next(new AppError("This user is not exist!", 401));
+    return res.status(401).json({
+      status: "fail",
+      message: "This user is not exist!",
+    });
   }
   // console.log("user : ", user);
   const correct = await user.correctPassword(password, user.password);
   if (!correct) {
-    return next(new AppError("Incorrect Password, Please Try Again", 401));
-    // res.status(401).json({
-    //   status: "fail",
-    //   message: "Incorrect Password, Please Try Again",
-    // });
+    return res.status(401).json({
+      status: "fail",
+      message: "Incorrect Password, Please Try Again",
+    });
+    // return next(new AppError("Incorrect Password, Please Try Again", 401));
   }
   createSendJWTToken(user, 200, res);
-});
+};
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token from localStorage and check of it's there
   let { token } = req.headers;
